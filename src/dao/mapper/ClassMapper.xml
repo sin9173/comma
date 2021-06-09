@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="dao.IClassDao">
+ 			 
+  <insert id="insertClass" parameterType="java.util.HashMap">
+  	insert into class (c_name, c_category, id, c_image, c_content, c_price, c_location, c_type, c_startday,
+  	 c_starttime, c_classtime, c_member, c_score, c_state) values (
+  	#{c_name}, #{c_category}, #{id}, #{c_image}, #{c_content}, #{c_price},
+  	#{c_location}, #{c_type}, #{c_startday}, #{c_starttime}, #{c_classtime}, #{c_member},
+  	#{c_score}, #{c_state})	
+  </insert>
+  
+  <delete id="deleteClass" parameterType="java.util.HashMap">
+  	delete from class where c_number = #{c_number}	
+  </delete>
+  
+  <update id="updateClass" parameterType="java.util.HashMap">
+  	update class set c_name = #{c_name}, c_category= #{c_category}, c_image= #{c_image},
+  	 c_content= #{c_content}, c_price= #{c_price}, c_location= #{c_location},
+  	 c_type= #{c_type}, c_startday= #{c_startday}, c_endday= #{c_endday}, c_starttime= #{c_starttime}, c_classtime= #{c_classtime},
+  	 c_member= #{c_member}, c_score= #{c_score}, c_state= #{c_state} where c_number= #{c_number}
+  </update>
+  
+  <update id="addLikeClass" parameterType="String">
+  	update member set like = {like}
+  </update>
+  
+  <update id="deleteLikeClass" parameterType="String">
+  	
+  </update>
+  
+  <select id="selectSearch" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+  	select * from class where 1=0
+  	<if test="keyword!=null">
+  		or c_name like '%${keyword}%'
+  		or c_category like '%${keyword}%'
+  		or c_location like '%${keyword}%'
+  	</if>
+  	
+  	<if test="category!=null">
+  		or c_category like '%${category}%'
+  	</if>
+  	
+  	<if test="type==0">
+  		or 1=1
+  	</if>
+  	
+  	order by c_number desc
+  </select>
+  
+  <select id="params" resultType="java.util.HashMap" parameterType="String">
+  	select * from class where c_name= #{c_name}
+  </select>
+  
+  
+  <select id="selectOne" resultType="java.util.HashMap" parameterType="int">
+  	select * from class where c_number= #{c_number}
+  </select>
+  
+  <select id="listClass" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+  	select * from class
+  </select>
+  
+  <select id="popClass" resultType="java.util.HashMap">
+    select * from class order by c_score desc limit 3
+	
+  </select>
+  
+  <select id="allClass" resultType="java.util.HashMap">
+    select * from class order by c_score desc
+	
+  </select>
+  
+  <update id="fileUpload" parameterType="java.util.HashMap">
+  	update class set c_image=#{files} where c_number=#{number}
+  </update>
+  
+  <select id="latestInfo" resultType="java.util.HashMap">
+  	select * from class order by c_number desc limit 1
+  </select>
+  
+  
+  
+  
+  
+  </mapper>

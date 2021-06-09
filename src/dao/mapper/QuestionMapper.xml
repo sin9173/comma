@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="dao.IQuestionDao">
+  
+  <insert id="insertQuestion" parameterType="java.util.HashMap">
+  	insert into question_board (id, title, content) values
+  	(#{id}, #{title}, #{content})
+  </insert>
+  
+  <delete id="deleteQuestion" parameterType="int">
+  	delete from question_board where number= #{number}
+  </delete>
+  
+  <update id="updateQuestion" parameterType="java.util.HashMap">
+  	update question_board set title= #{title}, content= #{content}
+  	where number= #{number}
+  </update>
+  
+  <select id="selectOne" resultType="java.util.HashMap" parameterType="int">
+  	select * from question_board where number= #{number}
+  </select>
+  
+  <select id="selectAll" resultType="java.util.ArrayList">
+  	select * from question_board
+  </select>
+  
+  <select id="searchList" resultType="java.util.HashMap">
+  	select * from question_board
+  </select>
+  
+  <select id="selectQuestionPage" parameterType="java.util.HashMap"
+		resultType="question">
+		select * from question_board order by number desc limit #{skip}, #{qty}
+  </select>
+
+  <select id="getCount" parameterType="java.util.HashMap" resultType="int">
+
+		select count(*) from question_board
+	</select>
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  </mapper>

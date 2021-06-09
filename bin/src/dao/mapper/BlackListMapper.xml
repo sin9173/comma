@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="dao.IBlackListDao">
+  
+  <insert id="insertBlackList" parameterType="java.util.HashMap">
+  	insert into blacklist_board (id, title, content) values
+  	(#{id}, #{title}, #{content})
+
+    </insert>
+  
+  <delete id="deleteBlackList" parameterType="int">
+  	delete from blacklist_board where number = #{number}
+  
+  </delete>
+  
+  <update id="updateBlackList" parameterType="java.util.HashMap">
+  	update blacklist_board set title = #{title}, content = #{content} where number = #{number}
+  
+  </update>
+  
+  <select id="select" resultType="java.util.HashMap" parameterType="int">
+  	select * from blacklist_board where number = #{number}
+
+  </select>
+  
+  <select id="selectList" resultType="java.util.ArrayList" parameterType="java.util.HashMap">
+  	select * from blacklist_board
+
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </mapper>

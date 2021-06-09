@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="dao.IRequestClassDao">
+  
+  <insert id="insertRequestClass" parameterType="java.util.HashMap" >
+  	insert into request (id, c_title, c_category, content, price,
+  	c_location, c_startday, c_starttime, c_period)values 
+  	(#{id}, #{c_title}, #{c_category}, #{content}, #{price}, #{c_location},
+  	#{c_startday}, #{c_starttime}, #{c_period})
+  </insert>
+  
+  <delete id="deleteRequestClass" parameterType="int">
+	delete from request where number = #{number}  
+  </delete>
+  
+  <update id="updateRequestClass" parameterType="java.util.HashMap">
+  	update request set c_category= #{c_category}, content= #{content}, c_type= #{c_type},
+  	c_location= #{c_location}, r_status= #{r_status}, c_startday= #{c_startday},
+  	c_starttime= #{c_starttime}, c_classtime= #{c_classtime}, c_member= #{c_member} where number= #{number}
+  </update>
+  
+  <select id="select" resultType="java.util.HashMap" parameterType="int">
+  	select * from request where number= #{number}
+  </select>
+  
+  <select id="selectList" resultType="java.util.ArrayList" parameterType="java.util.HashMap">
+  	select * from request order by id desc
+  </select>
+  
+  <select id="searchList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+  	select * from request where 1=0
+  	<if test="keyword!=null">
+  		or c_title like '%${keyword}%'
+  		or c_category like '%${keyword}%'
+  		or c_location like '%${keyword}%'
+  	</if>
+  	
+  	<if test="category!=null">
+  		or c_category like '%${category}%'
+  	</if>
+  	
+  	<if test="type==0">
+  		or 1=1
+  	</if>
+  	
+  	order by number desc limit #{skip}, #{qty}
+  </select>
+  
+  
+  
+  <update id="TeacherOfferUpdate" parameterType="java.util.HashMap">
+  	update request set teacher=#{teacher}, r_status="${offer}" where number=${number}
+  </update>
+  
+  </mapper>

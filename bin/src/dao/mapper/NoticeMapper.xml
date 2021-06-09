@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="dao.INoticeDao">
+  
+  <insert id="insertNotice" parameterType="java.util.HashMap">
+  	insert into notice_board (id, title, content) values
+  	(#{id}, #{title}, #{content})
+  </insert>
+  
+  <delete id="deleteNotice" parameterType="int">
+  	delete from notice_board where number= #{number}
+  </delete>	
+  
+  <update id="updateNotice" parameterType="java.util.HashMap">
+  	update notice_board set title= #{title}, content= #{content}
+  	where number= #{number}
+  </update>
+  
+  <select id="select" resultType="java.util.HashMap" parameterType="int">
+  	select * from notice_board where number= #{number}
+  </select>
+  
+  <select id="selectAll" resultType="java.util.HashMap">
+  	select * from notice_board
+  </select>
+  
+  <select id="selectNoticePage" parameterType="java.util.HashMap"
+		resultType="notice">
+		select * from notice_board order by number desc limit #{skip}, #{qty}
+  </select>
+
+  <select id="getCount" parameterType="java.util.HashMap" resultType="int">
+
+		select count(*) from notice_board
+	</select>
+  
+ 
+  </mapper>

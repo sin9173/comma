@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="dao.IMemberDao">
+  
+  <insert id="insertMember" parameterType="java.util.HashMap">
+  	insert into member (id,name,email,password,gender,state)
+  	values (#{id}, #{name}, #{email}, #{password}, #{gender}, 1)
+  
+  </insert>
+  
+  <delete id="deleteMember" parameterType="java.util.HashMap">
+  	delete from member where id = #{id}
+  
+  </delete>
+  
+  <update id="updateMember"  parameterType="java.util.HashMap">
+  	update member set t_career=#{t_career},
+  		 t_education=#{t_education}, t_license=#{t_license},
+  		 t_sns=#{t_sns}
+  		where id = #{id}
+  
+  </update>
+  
+  <update id="teacherResist" parameterType="java.util.HashMap">
+  	update member set birth=#{birth}, p_number=#{p_number}, t_career=#{t_career},
+  		account=#{account}, t_education=#{t_education}, t_license=#{t_license},
+  		 t_sns=#{t_sns}, t_regdate=now(), state=5
+  		where id = #{id}
+  
+  </update>
+  
+  <update id="profileUpdate" parameterType="java.util.HashMap">
+  	update member set image=#{image} where id=#{id}
+  </update>
+  
+  <update id="updateMember_s" parameterType="java.util.HashMap">
+  	update member set email= #{email}, password= #{password},
+  	p_number= #{p_number},image=#{image} where id = #{id}
+  
+  </update>
+  
+  
+  
+  <select id="selectMember" resultType="java.util.HashMap" parameterType="String">
+  	select * from member where id = #{id}
+  
+  </select>
+  
+  <select id="listMember" resultType="java.util.ArrayList">
+  	select * from member
+  
+  </select>
+  
+  
+  <!-- 총 회원수 구하기 -->
+  <select id="getCount" resultType="int">
+  	select count(#{name}) from member
+  </select>
+
+	  
+  <select id="getMyTRequest" resultType="java.util.HashMap" parameterType="String">
+  	select * from request where teacher=#{teacher} order by number desc
+  </select>
+  
+  <select id="getMyRequest" resultType="java.util.HashMap" parameterType="String">
+  	select * from request where id=#{id} order by number desc
+  </select>
+  
+  <select id="acceptTList" resultType="java.util.HashMap" parameterType="int">
+  	select * from member where state=#{state}
+  </select>
+  
+  <update id="TeacherAccept" parameterType="String">
+  	update member set state=2 where id=#{id}
+  </update>
+  
+  <select id="rclassList" resultType="java.util.HashMap" parameterType="String">
+  	select * from class where id=#{id} and c_state=2
+  </select>
+  
+  <select id="comclassList" resultType="java.util.HashMap" parameterType="String">
+  	select * from class where id=#{id} and c_state=4
+  </select>
+  
+  <select id="enrollClass" resultType="java.util.HashMap" parameterType="String">
+  
+  	select * from enroll where number=#{id}
+  </select>
+  
+  <select id="payClass" resultType="java.util.HashMap" parameterType="String">
+  	select * from paylog where id=#{id} and type=1
+  </select>
+  
+  <select id="refundClass" resultType="java.util.HashMap" parameterType="String">
+  	select * from paylog where id=#{id} and type=2
+  </select>
+  
+  <select id="compClass" resultType="java.util.HashMap" parameterType="String">
+  	select * from comp where id=#{id}
+  </select>  
+  </mapper>
